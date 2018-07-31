@@ -64,7 +64,7 @@ function addApiResult(res,result){
 }
 
 /*请求方式*/
-// get
+// get  //不成功
 exports.get = function(req, res){
     addApiHead(res);
     getDataFromPath(req.path,'GET',req.query,res);
