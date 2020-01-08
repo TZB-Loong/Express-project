@@ -1,8 +1,7 @@
 // api/contract.js
    //获取接口信息  localhost:3000/api/contract
+var db = require('../db/db');
    var dataDemo={
-    'code':'000',
-    'message':'message消息',
     'lists':[
         {
             'name':'材料合同',
@@ -37,13 +36,12 @@
     ]
 }
 
-exports.getData = function(method,data){
+exports.getData = function(method,params){
+    console.log(method,params)
+    // db.query('SELECT * FROM user_name WHERE u_id = ?',[params.id],(results,fields)=>{
+    //     console.log(results,fields)
+    // })
     //接口返回的数据
-    var backData={
-        "code":'000',
-        "msg":"",
-        "data":dataDemo
-    }
     if(method=='DELETE'){
         backData={
             "code":'999',
@@ -51,7 +49,8 @@ exports.getData = function(method,data){
         }
     }
     
-    return JSON.stringify(backData);
+    // return JSON.stringify(dataDemo);
+    return dataDemo
 
 };
 

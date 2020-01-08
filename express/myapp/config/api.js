@@ -1,7 +1,6 @@
 // config/api.js
-
 var fs = require('fs');
-
+var json = require('./json');
 /**
  * 检查请求的路径是否存在  异步调用
  * @param apiName 请求路径
@@ -14,23 +13,24 @@ function getDataFromPath (apiName,method,params,res){
         fs.access(
             // 提取请求路径中的js文件
             apiName.substring(1)+'.js',
-            // 回调函数，检查请求的路径是否有效失败返回一个错误参数
             function(err){
                 if(!err){
                     // 每次请求都清除模块缓存重新请求
                     delete require.cache[require.resolve('..'+apiName)];
                     try{
+                        //正常的请求
                         addApiResult(res,require('..'+apiName).getData(method,params));
                     }catch(e){
-                        console.error(e.stack);
                         res.status(500).send(apiName+' has an error,please check the code.');
                     }
                 }else{
+                    //当请求路径失效时
                     addApiResult(res);
                 }
             }
         );
     }else{
+        //当请求路径为空时
         addApiResult(res);
     }
 };
@@ -57,14 +57,15 @@ function addApiHead(res){
  */
 function addApiResult(res,result){
     if(result){
-        res.send(result);
+        json(res,result)
+        // res.send(result);
     }else{
         res.status(404).send();
     }
 }
 
 /*请求方式*/
-// get  //不成功
+// get  
 exports.get = function(req, res){
     addApiHead(res);
     getDataFromPath(req.path,'GET',req.query,res);

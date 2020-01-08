@@ -3,12 +3,11 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 
-var dbConfing = require('../db/DBConfig');
+var dbConfing = require('../db/dbConfig');
 var userSQL = require('../db/usersql');
 
 //使用DBConfig.js的配置信息创建一个mySql连接池
 var pool = mysql.createPool(dbConfing.mysql);
-
 //响应一个json数据
 var responseJSON = function(res,ret){
 
