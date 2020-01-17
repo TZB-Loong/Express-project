@@ -1,56 +1,35 @@
 // api/contract.js
-   //获取接口信息  localhost:3000/api/contract
+//获取接口信息  localhost:3000/api/contract
 var db = require('../db/db');
-   var dataDemo={
-    'lists':[
-        {
-            'name':'材料合同',
-            'num': '85',
-            'allPay':'13659.693万元',
-            'share':'88.88%',
-            'all':null
-
-        },{
-            'name':'劳务合同',
-            'num': '85',
-            'allPay':'13659.693万元',
-            'share':'88.88%',
-            'all':'13659.69万元'
-
-        },
-        {
-            'name':"分包合同",
-            'num': '85',
-            'allPay':'13659.693万元',
-            'share':'88.88%',
-            'all':'13659.69万元'
-
-        },
-        {
-            'name':'其他合同',
-            'num': '85',
-            'allPay':'13659.693万元',
-            'share':'88.88%',
-            'all':'13659.69万元'
-        },
-    ]
-}
-
-exports.getData = function(method,params){
-    console.log(method,params)
-    // db.query('SELECT * FROM user_name WHERE u_id = ?',[params.id],(results,fields)=>{
-    //     console.log(results,fields)
-    // })
+var UserSQL = require('../db/usersql');
+exports.getData = async function(method,params){
+    let backData= {};
+    if(params.id == undefined){
+        backData = {
+            code:"99",
+            message:"id不能为空"
+        }
+        return  backData;
+    }
+    let results = await db.query(UserSQL.getUserById,[params.id]);
+    if(results.length !== 0){
+         backData = {
+            responseBody:results?results[0]:null
+        }
+    }else{
+        backData = {
+            "message":"暂无此用户"
+        }
+    }
+   
     //接口返回的数据
     if(method=='DELETE'){
         backData={
-            "code":'999',
-            "msg":"不支持DELETE方法"
+            "code":'99',
+            "message":"不支持DELETE方法"
         }
     }
-    
-    // return JSON.stringify(dataDemo);
-    return dataDemo
 
+    return backData;
 };
 

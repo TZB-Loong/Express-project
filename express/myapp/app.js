@@ -8,6 +8,41 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var api = require('./config/api');
 var app = express();
+// var vertoken  = require('./config/token_vertify');
+// var expressJwt  = require('express-jwt');
+
+// //验证token是否过期并规定哪些路由不用验证;
+// app.use(expressJwt({
+//   secret:'mes_qdhd_mobile_xhykjyxgs',
+// }).unless({
+//   path:['/api/login']   //除了这个地址其他的都需要验证
+// }))
+
+// app.use(function (req,res,next) { 
+//   var token = req.headers['authorization'];
+//   console.log(token,'token')
+//   if(token == undefined){
+//     // return res.status(401).send('token undefined');
+//     return next();
+//   }else{
+//     vertoken.verToken(token).then(data=>{
+//       req.data = data;
+//       return next();
+//     }).catch((error)=>{
+//       return next();
+//     })
+//   }
+//  })
+
+
+// app.use(function (err,req,next) { 
+//   if(err.status == 401){
+//     return res.status(401).send('token失效');
+//   }
+
+//  })
+
+
 /*引入api*/
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

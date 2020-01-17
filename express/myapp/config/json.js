@@ -3,7 +3,7 @@ var json = function(res,result){
     res.json({
         code:'0',
         message:"交易成功",
-        responseBody:result
+        ...result
     })
 };
 module.exports = json;

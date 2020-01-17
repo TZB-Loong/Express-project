@@ -8,7 +8,7 @@ var json = require('./json');
  * @param params   请求参数
  * @param res 返回请求
  */
-function getDataFromPath (apiName,method,params,res){
+ function getDataFromPath (apiName,method,params,res){
     if(apiName){
         fs.access(
             // 提取请求路径中的js文件
@@ -55,13 +55,14 @@ function addApiHead(res){
  * @param res
  * @param result
  */
-function addApiResult(res,result){
-    if(result){
-        json(res,result)
-        // res.send(result);
-    }else{
-        res.status(404).send();
-    }
+ function addApiResult(res,result){
+     result.then(data => {
+         if(data){
+            return  json(res,data)
+         }else{
+            return res.status(404).send();
+         }
+     })
 }
 
 /*请求方式*/
